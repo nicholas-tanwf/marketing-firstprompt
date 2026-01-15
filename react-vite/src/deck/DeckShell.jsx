@@ -47,6 +47,18 @@ export function DeckShell({
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [activeIndex, canGoNext, canGoPrev, sections, sourcesOpen])
 
+  // When changing slides, ensure the content area starts at the top.
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const behavior = reduceMotion ? 'auto' : 'smooth'
+    try {
+      el.scrollTo({ top: 0, behavior })
+    } catch {
+      el.scrollTop = 0
+    }
+  }, [activeSectionId, reduceMotion])
+
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
@@ -279,7 +291,8 @@ export function DeckShell({
         className={[
           'fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-black/20 backdrop-blur',
           'transition-transform duration-200 ease-out',
-          navHidden ? 'translate-y-[80%] opacity-0 pointer-events-none' : 'translate-y-0 opacity-70 hover:opacity-100',
+          // Keep navigation always accessible; when "hidden", only fade slightly.
+          navHidden ? 'translate-y-0 opacity-45' : 'translate-y-0 opacity-75 hover:opacity-100',
         ].join(' ')}
         aria-label="BOTTOM NAVIGATION"
       >
