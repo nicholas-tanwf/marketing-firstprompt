@@ -11,6 +11,19 @@ function App() {
   const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id)
   const [locale, setLocale] = useState('en')
 
+  // Keep slide selection resilient on static hosting (hash-based).
+  useEffect(() => {
+    const applyHash = () => {
+      const id = window.location.hash?.replace('#', '')?.trim()
+      if (!id) return
+      if (sections.some((s) => s.id === id)) setActiveSectionId(id)
+    }
+
+    applyHash()
+    window.addEventListener('hashchange', applyHash)
+    return () => window.removeEventListener('hashchange', applyHash)
+  }, [sections])
+
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(LOCALE_KEY)
@@ -39,11 +52,20 @@ function App() {
     })
   }
 
+  const selectSection = (id) => {
+    setActiveSectionId(id)
+    try {
+      window.history.replaceState(null, '', `#${id}`)
+    } catch {
+      // ignore
+    }
+  }
+
   return (
     <DeckShell
       sections={sections}
       activeSectionId={activeSectionId}
-      onSelectSection={setActiveSectionId}
+      onSelectSection={selectSection}
       locale={locale}
       onToggleLocale={toggleLocale}
     >
