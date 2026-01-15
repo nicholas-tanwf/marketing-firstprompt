@@ -16,6 +16,15 @@ function initialsFromOrg(org) {
   return words.map((w) => w[0]?.toUpperCase()).filter(Boolean).join('')
 }
 
+function resolvePublicUrl(path) {
+  const raw = String(path ?? '')
+  if (!raw) return raw
+  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
+  if (!raw.startsWith('/')) return raw
+  const base = import.meta.env.BASE_URL || '/'
+  return base.endsWith('/') ? `${base}${raw.slice(1)}` : `${base}${raw}`
+}
+
 export function SlideRenderer({
   slides,
   activeSectionId,
@@ -95,6 +104,8 @@ export function SlideRenderer({
     const companies = Array.isArray(slide.companies) ? slide.companies : []
     const hero = slide.heroImage
 
+    const heroSrc = useMemo(() => resolvePublicUrl(hero?.src), [hero?.src])
+
     return (
       <section
         className="relative min-h-[calc(100dvh-12rem)] overflow-hidden rounded-3xl border border-white/12 bg-white/5 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.55)] backdrop-blur-md md:p-6"
@@ -141,9 +152,9 @@ export function SlideRenderer({
               {locale === 'zh' ? '现场照片' : 'Event photo'}
             </div>
             <div className="mt-3">
-              {hero?.src ? (
+              {heroSrc ? (
                 <img
-                  src={hero.src}
+                  src={heroSrc}
                   alt={pickCopy(hero?.alt, locale) || ''}
                   loading="lazy"
                   decoding="async"

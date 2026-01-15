@@ -2,6 +2,15 @@ import { useMemo, useState } from 'react'
 import { Keyword } from './Keyword.jsx'
 import { SourceBadge } from './SourceBadge.jsx'
 
+function resolvePublicUrl(path) {
+  const raw = String(path ?? '')
+  if (!raw) return raw
+  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
+  if (!raw.startsWith('/')) return raw
+  const base = import.meta.env.BASE_URL || '/'
+  return base.endsWith('/') ? `${base}${raw.slice(1)}` : `${base}${raw}`
+}
+
 function getYouTubeId(url) {
   const raw = String(url ?? '')
   if (!raw) return null
@@ -36,6 +45,10 @@ export function Tile({ tile, locale = 'en' }) {
   const thumbnail = youTubeId
     ? `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`
     : null
+  const resolvedImageSrc = useMemo(
+    () => resolvePublicUrl(tile?.src),
+    [tile?.src],
+  )
 
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-white/12 bg-white/6 p-4 shadow-[0_14px_46px_rgba(0,0,0,0.42)] transition will-change-transform hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/8 active:scale-[0.99]">
@@ -71,10 +84,10 @@ export function Tile({ tile, locale = 'en' }) {
         <SourceBadge claimIds={claimIds} />
       </div>
 
-      {kind === 'image' && tile?.src && !imageBroken ? (
+      {kind === 'image' && resolvedImageSrc && !imageBroken ? (
         <figure className="mt-3">
           <img
-            src={tile.src}
+            src={resolvedImageSrc}
             alt={imgAlt || ''}
             loading="lazy"
             decoding="async"
