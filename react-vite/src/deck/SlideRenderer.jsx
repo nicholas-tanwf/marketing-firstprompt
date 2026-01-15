@@ -49,6 +49,10 @@ export function SlideRenderer({
   const bulletTiles = tiles.filter((t) => t?.kind !== 'image' && t?.kind !== 'video')
   const mediaTiles = tiles.filter((t) => t?.kind === 'image' || t?.kind === 'video')
 
+  // IMPORTANT: keep hooks unconditional (Pages navigation relies on stable hook order)
+  const hero = slide?.heroImage
+  const heroSrc = useMemo(() => resolvePublicUrl(hero?.src), [hero?.src])
+
   function CompanyLogo({ company }) {
     const [logoOk, setLogoOk] = useState(true)
     const logoSlug = company?.logoSlug
@@ -102,9 +106,6 @@ export function SlideRenderer({
 
   if (slide.layout === 'title') {
     const companies = Array.isArray(slide.companies) ? slide.companies : []
-    const hero = slide.heroImage
-
-    const heroSrc = useMemo(() => resolvePublicUrl(hero?.src), [hero?.src])
 
     return (
       <section
