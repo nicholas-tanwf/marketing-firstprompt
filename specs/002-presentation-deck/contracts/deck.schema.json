@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/deck.schema.json",
+  "title": "Bilingual Deck Content Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sections", "slides"],
+  "properties": {
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/slide" }
+    }
+  },
+  "$defs": {
+    "localizedString": {
+      "description": "Either a single string or an object with English + Chinese values.",
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["en", "zh"],
+          "properties": {
+            "en": { "type": "string", "minLength": 1 },
+            "zh": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slides"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "$ref": "#/$defs/localizedString" },
+        "a11yLabel": { "$ref": "#/$defs/localizedString" },
+        "icon": { "type": "string" },
+        "slides": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "slide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sectionId", "title", "layout", "tiles"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "sectionId": { "type": "string", "minLength": 1 },
+        "title": { "$ref": "#/$defs/localizedString" },
+        "subtitle": { "$ref": "#/$defs/localizedString" },
+        "layout": { "type": "string", "minLength": 1 },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tiles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/tile" }
+        },
+        "claims": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "speakerNotes": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "tile": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["bullet", "metric", "image", "video"] },
+        "title": { "$ref": "#/$defs/localizedString" },
+        "body": { "$ref": "#/$defs/localizedString" },
+        "value": { "type": "string" },
+        "src": { "type": "string" },
+        "alt": { "$ref": "#/$defs/localizedString" },
+        "youtubeUrl": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "image" } } },
+          "then": { "required": ["src", "alt"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "video" } } },
+          "then": { "required": ["youtubeUrl"] }
+        }
+      ]
+    }
+  }
+}
+

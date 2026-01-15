@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App baseline (mobile-first) */
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #04081a;
+  color: #ffffff;
+  font-size: 16px; /* avoid <16px on mobile */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+@keyframes deckFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.deck-fade-in {
+  animation: deckFadeIn 420ms ease-out both;
+  will-change: opacity, transform;
+}
+
+@keyframes deckAurora {
+  0% {
+    transform: translate3d(-1%, -1%, 0) scale(1.02);
+    opacity: 0.35;
+    filter: blur(0.4px);
+  }
+  50% {
+    transform: translate3d(1%, 0.5%, 0) scale(1.04);
+    opacity: 0.55;
+    filter: blur(0.8px);
+  }
+  100% {
+    transform: translate3d(-0.5%, 1%, 0) scale(1.03);
+    opacity: 0.40;
+    filter: blur(0.6px);
+  }
+}
+
+.deck-aurora {
+  animation: deckAurora 10s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

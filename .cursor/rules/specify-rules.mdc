@@ -1,0 +1,34 @@
+# Spec Kit Practise Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-01-14
+
+## Active Technologies
+- JavaScript (React 18) + Node.js (Vite dev/build) + React, Vite, Tailwind CSS (existing repo app in `react-vite/`) (002-presentation-deck)
+- Local-only (browser `localStorage` for language preference); no backend (002-presentation-deck)
+
+- JavaScript (ESM) + React 19 (via Vite) + Vite 7 + React 19 + Tailwind CSS 3 + PostCSS (001-market-research-deck)
+
+## Project Structure
+
+```text
+backend/
+frontend/
+tests/
+```
+
+## Commands
+
+npm test && npm run lint
+
+## Code Style
+
+JavaScript (ESM) + React 19 (via Vite): Follow standard conventions
+
+## Recent Changes
+- 002-presentation-deck: Added JavaScript (React 18) + Node.js (Vite dev/build) + React, Vite, Tailwind CSS (existing repo app in `react-vite/`)
+- 001-market-research-deck: Added JavaScript (ESM) + React 19 (via Vite) + Vite 7 + React 19 + Tailwind CSS 3 + PostCSS
+
+- 001-market-research-deck: Added JavaScript (ESM) + React 19 (via Vite) + Vite 7 + React 19 + Tailwind CSS 3 + PostCSS
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

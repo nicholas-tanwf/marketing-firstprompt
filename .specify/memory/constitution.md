@@ -1,50 +1,89 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: N/A (template) → 1.0.0
+- Modified principles: Template placeholders → 5 marketing-deck principles (new titles)
+- Added sections: Deliverables & Content Structure; Workflow & Quality Gates
+- Removed sections: N/A (template filled)
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md (fix command path reference)
+- Deferred TODOs:
+  - TODO(RATIFICATION_DATE): Original adoption date not provided
+-->
+
+# AI Market Research Deck Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Audience-First Narrative (Insight > Information)
+Every slide MUST communicate a single, clear takeaway. The “so what” MUST appear
+before supporting detail. Content MUST be structured as a story (problem →
+shift → opportunity → proof → next action) rather than a feature list.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Evidence & Sourcing Integrity (No Unattributed Claims)
+Any quantitative claim, competitor comparison, or market sizing statement MUST
+include a source and date (in speaker notes or an appendix). Hypotheses MUST be
+labeled as hypotheses. If a claim cannot be sourced, it MUST be removed or
+rewritten as a qualitative insight.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Mobile-First, Touch-First, Accessibility-First (WCAG 2.1 AA)
+Design MUST start on mobile viewports and scale up. Interactive elements MUST
+meet a minimum 44×44px touch target. Body text MUST be ≥16px on mobile, and each
+screen MUST use at most 3 font sizes. The deck MUST maintain WCAG 2.1 AA color
+contrast, include visible focus states, and ship with dark mode styling.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Performance & Simplicity (Fast, Lightweight, Maintainable)
+The presentation MUST load quickly and animate smoothly (60fps targets using
+transform/opacity). Heavy dependencies MUST be avoided unless they materially
+reduce complexity. Prefer static assets and small components over runtime-heavy
+effects.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Velocity With Quality Gates (Ship, Measure, Iterate)
+Work happens in short cycles. Each iteration MUST include: the hypothesis being
+tested, what changed, and how success will be measured (e.g., comprehension,
+retention, conversion, or stakeholder approval). Quality gates in this
+constitution MUST be met before sharing externally.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Deliverables & Content Structure
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+The project MUST maintain a clear separation between content, sources, and UI.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- **Deck**: A React (Vite) presentation UI with reusable slide components.
+- **Content**: Slide copy stored in a structured format (JSON/TS module/MDX).
+- **Sources**: A single “sources appendix” page or section that lists:
+  - Source title + publisher
+  - URL (or internal document name)
+  - Publication date
+  - The claims/slides it supports (traceability)
+- **Speaker notes**: Notes MUST include any assumptions, definitions, and
+  positioning choices that are not visible on-slide.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Workflow & Quality Gates
+
+Before any deck iteration is considered “ready to share”, it MUST pass:
+
+- **Narrative gate**: Every slide has one takeaway, and the storyline reads
+  coherently without presenter commentary.
+- **Sourcing gate**: Every number/comparison has a source + date.
+- **Accessibility gate**: Contrast checks, keyboard navigation, and visible
+  focus states verified; touch target minimums met.
+- **Mobile gate**: Usable and readable at mobile width; body text ≥16px.
+- **Performance gate**: No jank in transitions; avoid layout-thrashing.
+- **Brand/voice gate**: Tone matches “confident, clear, evidence-led”.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes local conventions and template defaults.
+- **Amendments**:
+  - Any change MUST include rationale and a brief “impact” note.
+  - Amendments MUST update dependent templates/docs if references become stale.
+- **Versioning**:
+  - MAJOR: A principle is removed/redefined, or quality gates become weaker.
+  - MINOR: A new principle/section is added, or requirements materially expand.
+  - PATCH: Clarifications and wording improvements with no behavioral change.
+- **Compliance review**:
+  - Any work that introduces new claims MUST also update sources/traceability.
+  - Any work that introduces new UI patterns MUST meet accessibility rules.
+  - Exceptions MUST be explicitly documented under “Complexity Tracking” in the
+    relevant plan.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date not provided | **Last Amended**: 2026-01-14
