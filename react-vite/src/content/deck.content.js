@@ -141,15 +141,6 @@ export const SLIDES = [
         },
       },
       {
-        id: 's2-2b',
-        kind: 'bullet',
-        title: { en: 'DO IT BETTER', zh: '做得更好' },
-        body: {
-          en: 'It’s not about doing something different; it’s about doing it better.',
-          zh: '不是做不一样的事，而是把事情做得更好。',
-        },
-      },
-      {
         id: 's2-3',
         kind: 'image',
         title: { en: ' ', zh: ' ' },
